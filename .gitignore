@@ -2,6 +2,8 @@
 /dist
 /node_modules
 /build
+/.adminjs
+database.db*
 
 # Logs
 logs
@@ -21,6 +23,7 @@ lerna-debug.log*
 
 # IDEs and editors
 /.idea
+/.vscode
 .project
 .classpath
 .c9/

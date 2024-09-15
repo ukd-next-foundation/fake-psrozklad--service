@@ -13,18 +13,72 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  posts Post[]
+model Building {
+  ID        Int         @id @default(autoincrement())
+  name      String      @unique
+  Classroom Classroom[]
 }
 
-model Post {
-  id        Int      @id @default(autoincrement())
-  title     String
-  content   String?
-  published Boolean? @default(false)
-  author    User?    @relation(fields: [authorId], references: [id])
-  authorId  Int?
+model Classroom {
+  ID         Int        @id @default(autoincrement())
+  name       String     @unique
+  building   Building   @relation(fields: [buildingID], references: [ID])
+  buildingID Int
+  Schedule   Schedule[]
+}
+
+model Departament {
+  ID       Int    @id @default(autoincrement())
+  name     String @unique
+  teachers User[]
+}
+
+model Faculty {
+  ID    Int     @id @default(autoincrement())
+  name  String  @unique
+  Group Group[]
+}
+
+model Group {
+  ID        Int     @id @default(autoincrement())
+  name      String  @unique
+  faculty   Faculty @relation(fields: [facultyID], references: [ID])
+  facultyID Int
+}
+
+model Lesson {
+  ID       Int        @id @default(autoincrement())
+  name     String     @unique
+  Schedule Schedule[]
+}
+
+model User {
+  ID            Int         @id @default(autoincrement())
+  name          String      @unique
+  Departament   Departament @relation(fields: [departamentID], references: [ID])
+  departamentID Int
+  Schedule      Schedule[]
+}
+
+model Schedule {
+  ID           Int        @id @default(autoincrement())
+  date         String
+  time         String
+  half         String
+  lesson       Lesson?    @relation(fields: [lessonID], references: [ID])
+  lessonID     Int?
+  teacher      User?      @relation(fields: [teacherID], references: [ID])
+  teacherID    Int?
+  classroom    Classroom? @relation(fields: [classroomID], references: [ID])
+  classroomID  Int?
+  groups       String
+  type         String
+  replacement  String
+  reservation  String
+  tableIndex   String
+  teachersAdd  String
+  group        String
+  online       String
+  comment4link String
+  link         String
 }
